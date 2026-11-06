@@ -1,0 +1,29 @@
+# Généré par AgentLake : relancer le bootstrap plutôt que modifier ce fichier.
+name: AgentLake — relecture
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened, ready_for_review]
+
+permissions: {}
+
+# La relecture d'un commit dépassé est annulée (le groupe n'existe qu'à ce niveau).
+concurrency:
+  group: agentlake-review-${{ github.event.pull_request.number }}
+  cancel-in-progress: true
+
+jobs:
+  # Le nom du job fait partie du nom des checks obligatoires :
+  # « agentlake / tests-guard » et « agentlake / review ».
+  agentlake:
+    # Jamais sur une PR venant d'un fork : pas d'accès aux secrets (la PR reste non mergeable).
+    if: github.event.pull_request.head.repo.full_name == github.repository
+    permissions:
+      contents: read
+      pull-requests: write
+      issues: write
+    uses: kiamiya/devlake/.github/workflows/review.yml@v1
+    with:
+      pr_number: ${{ github.event.pull_request.number }}
+      devlake_ref: v1
+    secrets: inherit

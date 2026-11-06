@@ -1,0 +1,11 @@
+# Configuration AgentLake du projet.
+type: web
+qualityProfile: web
+limits:
+  maxAttempts: 3
+  answerReminderHours: 24
+profiles:
+  - architect
+  - reviewer
+exclusiveResources: []
+bridgeRequired: false

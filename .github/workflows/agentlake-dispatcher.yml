@@ -1,0 +1,38 @@
+# Généré par AgentLake : relancer le bootstrap plutôt que modifier ce fichier.
+name: AgentLake — dispatcher
+
+on:
+  schedule:
+    # Passe de rattrapage toutes les 10 minutes.
+    - cron: '*/10 * * * *'
+  issues:
+    types: [labeled, closed]
+  issue_comment:
+    types: [created]
+  pull_request:
+    types: [closed]
+  check_suite:
+    types: [completed]
+  workflow_run:
+    workflows: ['AgentLake — agent']
+    types: [completed]
+  workflow_dispatch:
+
+permissions: {}
+
+# Pas de groupe de concurrence ici : le job appelé a déjà `agentlake-dispatcher`
+# (le même groupe à deux niveaux bloquerait le job indéfiniment).
+# Pas de filtre d'auteur ici non plus : le dispatcher ignore lui-même les événements
+# d'autres comptes, avec une trace dans le journal du run.
+
+jobs:
+  dispatch:
+    permissions:
+      contents: read
+      issues: write
+      pull-requests: read
+      actions: write
+    uses: kiamiya/devlake/.github/workflows/dispatcher.yml@v1
+    with:
+      devlake_ref: v1
+    secrets: inherit
