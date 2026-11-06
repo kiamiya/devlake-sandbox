@@ -1,0 +1,13 @@
+{
+  "version": 1,
+  "files": [
+    {
+      "path": ".agentlake/context/brief.md",
+      "role": "brief",
+      "source": "rendez-vous.md",
+      "sha256": "0772a39e854a38a0e6301373fc0f388afa2abd07b2092cd1e53e610068e89d7e",
+      "size": 914,
+      "importedAt": "2026-11-06T14:39:24.822Z"
+    }
+  ]
+}
